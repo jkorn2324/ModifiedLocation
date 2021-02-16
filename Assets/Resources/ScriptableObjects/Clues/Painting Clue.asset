@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902c09374964afb408f8febb0e922534, type: 3}
   m_Name: Painting Clue
   m_EditorClassIdentifier: 
-  clueLocalizedName: Painting Clue
+  clueLocalizedName: luckyticket.clue
   clueData:
     clueTitle: A Lucky Ticket
     clueDescription: 'The legendary performance of a man who shocked the world with

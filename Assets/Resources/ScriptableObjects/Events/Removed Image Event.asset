@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
-  m_Name: ARReferenceImages
+  m_Script: {fileID: 11500000, guid: 1635d36cebafaca4e8e52705b0b951db, type: 3}
+  m_Name: Removed Image Event
   m_EditorClassIdentifier: 
-  m_GuidLow: 5139899880793094749
-  m_GuidHigh: 13672835132212598168
-  m_Images: []

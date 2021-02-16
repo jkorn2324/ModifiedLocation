@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902c09374964afb408f8febb0e922534, type: 3}
+  m_Name: Painting Clue
+  m_EditorClassIdentifier: 
+  clueLocalizedName: Painting Clue
+  clueData:
+    clueTitle: A Lucky Ticket
+    clueDescription: 'The legendary performance of a man who shocked the world with
+      a number: 81.'
+    clueHints: []
+  referenceImageData:
+    imageName: LuckyTicket
+    textureImage: {fileID: 2800000, guid: fe3304590eea4fd4bbe72f11fb01d5d0, type: 3}
+    prefab: {fileID: 2301901324170345632, guid: c7aea1ff488c4434fbefda0076654114,
+      type: 3}
+  found: 0

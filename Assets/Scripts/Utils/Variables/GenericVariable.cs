@@ -12,9 +12,9 @@ namespace ModifiedLocation.Scripts.Utils
     public abstract class GenericVariable<T> : ScriptableObject
     {
         [SerializeField]
-        private T originalValue;
+        protected T originalValue;
         [SerializeField]
-        private T value;
+        protected T value;
 
         public event System.Action<T> ChangedValueEvent
             = delegate { };

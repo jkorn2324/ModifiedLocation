@@ -9,12 +9,11 @@ namespace ModifiedLocation.Scripts.Game
     public class ClueManager : Utils.EventsListener
     {
         [SerializeField]
-        private GameClueSet gameClueSet;
+        private GameClueSetReference activeClueSet;
         [SerializeField]
         private Utils.ARTrackedImageEvent addedImageEvent;
         [SerializeField]
         private RuntimeReferenceImageReference imageLibrary;
-
 
         protected override void HookEvents()
         {
@@ -34,20 +33,12 @@ namespace ModifiedLocation.Scripts.Game
             {
                 return;
             }
-            this.gameClueSet?.AddReferenceClues(imageLibrary);
+            this.activeClueSet.Init(imageLibrary);
         }
 
         private void OnImageAdded(ARTrackedImage image)
         {
-            GameClue clueAsset = this.gameClueSet.GetClueFromImageName(image.name);
-            if(clueAsset != null)
-            {
-                Debug.Log("Image has been added..." + image.name);
-                RuntimeClue runtimeClue = new RuntimeClue(clueAsset, image);
-                runtimeClue.SpawnPrefab();
-
-                Debug.Log("Found a clue that exists.");
-            }
+            this.activeClueSet.UpdateClueFromImage(image, RuntimeClueImageState.STATE_ADDED);
         }
     }
 }

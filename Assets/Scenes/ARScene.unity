@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -407,7 +407,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3409a2c6831984944843d74c7dcff1d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameClueSet: {fileID: 11400000, guid: 08983b1204b10834c8b6f905c02cd13a, type: 2}
+  activeClueSet:
+    isConstant: 1
+    constantValue: {fileID: 11400000, guid: 08983b1204b10834c8b6f905c02cd13a, type: 2}
+    activeSet: {fileID: 0}
   addedImageEvent: {fileID: 11400000, guid: 97a536c4c25797849b1c4005f245a741, type: 2}
   imageLibrary:
     isConstant: 0

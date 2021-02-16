@@ -6,14 +6,12 @@ using UnityEngine.XR.ARSubsystems;
 
 namespace ModifiedLocation.Scripts.Game
 {
+
     [CreateAssetMenu(fileName = "Game Clue Set", menuName = "Clue/Game Clue Set")]
     public class GameClueSet : ScriptableObject
     {
         [SerializeField]
         private List<GameClue> clues;
-
-        public int NumberOfClues
-            => this.clues.Count;
 
         /// <summary>
         /// Adds the reference clues.
@@ -55,5 +53,38 @@ namespace ModifiedLocation.Scripts.Game
                 return clue.ReferenceImageData.ImageName == imageName;
             });
         }
+    }
+
+    [System.Serializable]
+    public class GameClueSetReference : Utils.GenericReference<GameClueSet>
+    {
+        [SerializeField]
+        private GameClueSet value;
+        private RuntimeClueManager _clueManager = null;
+
+        public override bool HasVariable 
+            => this.value != null;
+
+        protected override GameClueSet ReferenceValue 
+        { 
+            get => this.value;
+            set
+            {
+                this.value = value;
+            }
+        }
+
+        public void Init(MutableRuntimeReferenceImageLibrary imageLibrary)
+        {
+            this.Value?.AddReferenceClues(imageLibrary);
+            this._clueManager = new RuntimeClueManager(this.Value);
+        }
+
+        public void UpdateClueFromImage(ARTrackedImage image, RuntimeClueImageState state)
+        {
+            this._clueManager?.UpdateClueFromImage(image, state);
+        }
+
+        public override void Reset() { }
     }
 }

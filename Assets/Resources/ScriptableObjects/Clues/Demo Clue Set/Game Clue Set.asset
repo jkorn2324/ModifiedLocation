@@ -12,10 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb9286a5ae18ba41b996edda86905dd, type: 3}
   m_Name: Game Clue Set
   m_EditorClassIdentifier: 
-  cluesNumber:
-    isConstant: 0
-    constantValue: 0
-    variable: {fileID: 11400000, guid: 8aaf2b3aaeab84221af2307aaa10dd02, type: 2}
   clues:
   - {fileID: 11400000, guid: 95119ce5c98268d48a541ba967041c1c, type: 2}
   - {fileID: 11400000, guid: fee9615fe24374751b86cfd5f68d7299, type: 2}

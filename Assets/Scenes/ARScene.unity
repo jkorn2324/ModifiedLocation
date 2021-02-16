@@ -197,6 +197,8 @@ MonoBehaviour:
     isConstant: 0
     constantValue: 0
     variable: {fileID: 11400000, guid: a12b9acda36db704dbf9e90d77953ec6, type: 2}
+  createRuntimeLibrary: {fileID: 11400000, guid: 5b379c4b18def492ea17f994d8b06c31,
+    type: 2}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,9 +350,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SerializedLibrary: {fileID: 0}
-  m_MaxNumberOfMovingImages: 0
-  m_TrackedImagePrefab: {fileID: 0}
+  m_SerializedLibrary: {fileID: 11400000, guid: 0fa702e26b78348fb8b4c933f4da86d9,
+    type: 2}
+  m_MaxNumberOfMovingImages: 1
+  m_TrackedImagePrefab: {fileID: 7499937144925584055, guid: df404718abe554d3c95f6cd82f1d05c8,
+    type: 3}
 --- !u!114 &1298930341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +376,8 @@ MonoBehaviour:
     isConstant: 0
     constantValue: 0
     variable: {fileID: 11400000, guid: a12b9acda36db704dbf9e90d77953ec6, type: 2}
+  createReferenceLibEvent: {fileID: 11400000, guid: 5b379c4b18def492ea17f994d8b06c31,
+    type: 2}
 --- !u!1 &1708744430
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,10 +412,6 @@ MonoBehaviour:
   imageLibrary:
     isConstant: 0
     variable: {fileID: 11400000, guid: 0f74b60bf8eb8d74bb4076d62eddbbd9, type: 2}
-  imageTrackingSupported:
-    isConstant: 0
-    constantValue: 0
-    variable: {fileID: 11400000, guid: a12b9acda36db704dbf9e90d77953ec6, type: 2}
 --- !u!4 &1708744432
 Transform:
   m_ObjectHideFlags: 0

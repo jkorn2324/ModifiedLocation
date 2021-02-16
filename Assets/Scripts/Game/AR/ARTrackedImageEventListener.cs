@@ -17,30 +17,44 @@ namespace ModifiedLocation.Scripts.Game
         private RuntimeReferenceImageReference imageLibraryReference;
         [SerializeField]
         private Utils.BoolReference trackingSupported;
+        [SerializeField]
+        private Utils.GameEvent createReferenceLibEvent;
 
         private ARTrackedImageManager _imageManager;
 
         private void Awake()
         {
             this._imageManager = this.GetComponent<ARTrackedImageManager>();
-        }
-
-        protected override void OnStart()
-        {
-            if(this.trackingSupported.Value)
+            if(this._imageManager.descriptor != null)
             {
-                this.imageLibraryReference.Value = this._imageManager.CreateRuntimeLibrary() as MutableRuntimeReferenceImageLibrary;
+                Debug.Log("Supports a mutable library" +
+                    this._imageManager.descriptor.supportsMutableLibrary);
             }
         }
 
         protected override void HookEvents()
         {
+            this.createReferenceLibEvent?.AddListener(this.CreateReferenceLibrary);
             this._imageManager.trackedImagesChanged += this.OnTrackedImagesChanged;
         }
 
         protected override void UnHookEvents()
         {
+            this.createReferenceLibEvent?.RemoveListener(this.CreateReferenceLibrary);
             this._imageManager.trackedImagesChanged -= this.OnTrackedImagesChanged;
+        }
+
+        private void CreateReferenceLibrary()
+        {
+            if(this.trackingSupported.Value)
+            {
+                Debug.Log("Creating image library reference.");
+                MutableRuntimeReferenceImageLibrary runtimeRefImageLib =
+                    this._imageManager.CreateRuntimeLibrary() as MutableRuntimeReferenceImageLibrary;
+                this.imageLibraryReference.Value = runtimeRefImageLib;
+                this._imageManager.referenceLibrary = runtimeRefImageLib;
+                this._imageManager.enabled = true;
+            }
         }
 
         /// <summary>
@@ -49,6 +63,7 @@ namespace ModifiedLocation.Scripts.Game
         /// <param name="args">The args for the image changed.</param>
         private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs args)
         {
+            Debug.Log("Tracked images have been changed...");
             foreach(ARTrackedImage image in args.added)
             {
                 this.addedImageEvent?.CallEvent(image);

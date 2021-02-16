@@ -24,7 +24,7 @@ namespace ModifiedLocation.Scripts.Utils
             get => this.value;
             set
             {
-                if (!this.value.Equals(value))
+                if (this.value == null || !this.value.Equals(value))
                 {
                     this.ChangedValueEvent(value);
                 }

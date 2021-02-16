@@ -10,6 +10,9 @@ namespace ModifiedLocation.Scripts.Game
     {
         [SerializeField]
         private Utils.BoolReference arSupported;
+        [SerializeField]
+        private Utils.GameEvent createRuntimeLibrary;
+
         private ARSession _session;
 
         private void Awake()
@@ -37,6 +40,12 @@ namespace ModifiedLocation.Scripts.Game
             if(changedEvent.state == ARSessionState.Unsupported)
             {
                 this.arSupported.Value = false;
+                return;
+            }
+
+            if(this.arSupported.Value && changedEvent.state == ARSessionState.SessionInitializing)
+            {
+                this.createRuntimeLibrary?.CallEvent();
                 return;
             }
 

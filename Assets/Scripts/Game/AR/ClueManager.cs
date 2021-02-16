@@ -14,31 +14,27 @@ namespace ModifiedLocation.Scripts.Game
         private Utils.ARTrackedImageEvent addedImageEvent;
         [SerializeField]
         private RuntimeReferenceImageReference imageLibrary;
-        [SerializeField]
-        private Utils.BoolReference imageTrackingSupported;
 
-        protected override void OnStart()
-        {
-            this.OnSupportedChanged(this.imageTrackingSupported.Value);
-        }
 
         protected override void HookEvents()
         {
-            this.imageTrackingSupported.ChangedValueEvent += this.OnSupportedChanged;
+            this.imageLibrary.ChangedValueEvent += OnRuntimeImageLibChanged;
             this.addedImageEvent?.AddListener(this.OnImageAdded);
         }
 
         protected override void UnHookEvents()
         {
-            this.imageTrackingSupported.ChangedValueEvent -= this.OnSupportedChanged;
+            this.imageLibrary.ChangedValueEvent -= OnRuntimeImageLibChanged;
+            this.addedImageEvent?.RemoveListener(this.OnImageAdded);
         }
 
-        private void OnSupportedChanged(bool supported)
+        private void OnRuntimeImageLibChanged(MutableRuntimeReferenceImageLibrary imageLibrary)
         {
-            if(supported && imageLibrary.Value != null)
+            if(imageLibrary == null)
             {
-                this.gameClueSet?.AddReferenceClues(imageLibrary.Value);
+                return;
             }
+            this.gameClueSet?.AddReferenceClues(imageLibrary);
         }
 
         private void OnImageAdded(ARTrackedImage image)
@@ -46,6 +42,7 @@ namespace ModifiedLocation.Scripts.Game
             GameClue clueAsset = this.gameClueSet.GetClueFromImageName(image.name);
             if(clueAsset != null)
             {
+                Debug.Log("Image has been added..." + image.name);
                 RuntimeClue runtimeClue = new RuntimeClue(clueAsset, image);
                 runtimeClue.SpawnPrefab();
 

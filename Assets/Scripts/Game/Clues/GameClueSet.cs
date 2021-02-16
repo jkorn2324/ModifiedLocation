@@ -21,6 +21,8 @@ namespace ModifiedLocation.Scripts.Game
         /// <param name="library">The library.</param>
         public void AddReferenceClues(MutableRuntimeReferenceImageLibrary library)
         {
+            // Updates the clues amount.
+            Debug.Log("Adding reference clues");
             foreach(GameClue clue in this.clues)
             {
                 clue.ReferenceImageData.AddReferenceImage(library);

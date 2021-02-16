@@ -11,6 +11,7 @@ namespace ModifiedLocation.Scripts.Game
     public enum RuntimeClueImageState
     {
         STATE_REMOVED,
+        STATE_UPDATED,
         STATE_ADDED
     }
 
@@ -73,14 +74,15 @@ namespace ModifiedLocation.Scripts.Game
         /// <param name="state">The image state.</param>
         public void UpdateClueFromImage(ARTrackedImage image, RuntimeClueImageState state)
         {
-            RuntimeClue clue;
-            if((clue = this.GetClueFromImage(image.name)) != null)
+            string imageName = image.referenceImage.name;
+            RuntimeClue clue = this.GetClueFromImage(imageName);
+            if(clue != null)
             {
                 clue.UpdatePrefab(image, state);
                 return;
             }
 
-            GameClue gameClueData = this._parentSet.GetClueFromImageName(image.name);
+            GameClue gameClueData = this._parentSet.GetClueFromImage(imageName);
             if(gameClueData != null)
             {
                 clue = new RuntimeClue(gameClueData);

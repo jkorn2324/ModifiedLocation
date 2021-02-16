@@ -12,6 +12,8 @@ namespace ModifiedLocation.Scripts.Game
         [SerializeField]
         private Utils.ARTrackedImageEvent addedImageEvent;
         [SerializeField]
+        private Utils.ARTrackedImageEvent updatedImageEvent;
+        [SerializeField]
         private Utils.ARTrackedImageEvent removedImageEvent;
         [SerializeField]
         private RuntimeReferenceImageReference imageLibraryReference;
@@ -63,15 +65,19 @@ namespace ModifiedLocation.Scripts.Game
         /// <param name="args">The args for the image changed.</param>
         private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs args)
         {
-            Debug.Log("Tracked images have been changed...");
-            foreach(ARTrackedImage image in args.added)
+            foreach(ARTrackedImage addedImage in args.added)
             {
-                this.addedImageEvent?.CallEvent(image);
+                this.addedImageEvent?.CallEvent(addedImage);
             }
 
-            foreach(ARTrackedImage image in args.removed)
+            foreach(ARTrackedImage updatedImage in args.updated)
             {
-                this.removedImageEvent?.CallEvent(image);
+                this.updatedImageEvent?.CallEvent(updatedImage);
+            }
+
+            foreach(ARTrackedImage removedImage in args.removed)
+            {
+                this.removedImageEvent?.CallEvent(removedImage);
             }
         }
     }

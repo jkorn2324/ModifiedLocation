@@ -368,6 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addedImageEvent: {fileID: 11400000, guid: 97a536c4c25797849b1c4005f245a741, type: 2}
+  updatedImageEvent: {fileID: 11400000, guid: 3d5c80a716a0647eea95ec2f2514d362, type: 2}
   removedImageEvent: {fileID: 11400000, guid: bcbdfd0a066780e4c81203c454072d7e, type: 2}
   imageLibraryReference:
     isConstant: 0
@@ -407,11 +408,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3409a2c6831984944843d74c7dcff1d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeClueSet:
-    isConstant: 1
-    constantValue: {fileID: 11400000, guid: 08983b1204b10834c8b6f905c02cd13a, type: 2}
-    activeSet: {fileID: 0}
+  clueSet: {fileID: 11400000, guid: 08983b1204b10834c8b6f905c02cd13a, type: 2}
   addedImageEvent: {fileID: 11400000, guid: 97a536c4c25797849b1c4005f245a741, type: 2}
+  updatedImageEvent: {fileID: 11400000, guid: 3d5c80a716a0647eea95ec2f2514d362, type: 2}
   imageLibrary:
     isConstant: 0
     variable: {fileID: 11400000, guid: 0f74b60bf8eb8d74bb4076d62eddbbd9, type: 2}

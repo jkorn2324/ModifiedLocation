@@ -12,12 +12,13 @@ namespace ModifiedLocation.Scripts.Game
     {
         [SerializeField]
         private List<GameClue> clues;
+        private RuntimeClueManager _runtimeClueManager = null;
 
         /// <summary>
         /// Adds the reference clues.
         /// </summary>
         /// <param name="library">The library.</param>
-        public void AddReferenceClues(MutableRuntimeReferenceImageLibrary library)
+        public void InitClueSet(MutableRuntimeReferenceImageLibrary library)
         {
             // Updates the clues amount.
             Debug.Log("Adding reference clues");
@@ -25,66 +26,29 @@ namespace ModifiedLocation.Scripts.Game
             {
                 clue.ReferenceImageData.AddReferenceImage(library);
             }
-        }
 
-        /// <summary>
-        /// Gets the clue at the given index.
-        /// </summary>
-        /// <param name="index">The index of the clue.</param>
-        /// <returns>The Game Clue.</returns>
-        public GameClue GetClue(int index)
-        {
-            if(index >= clues.Count || index < 0)
+            if (this._runtimeClueManager == null)
             {
-                return null;
+                this._runtimeClueManager = new RuntimeClueManager(this);
             }
-            return this.clues[index];
         }
 
-        /// <summary>
-        /// Gets the clue from an image name.
-        /// </summary>
-        /// <param name="imageName">The image name.</param>
-        /// <returns>The Game Clue.</returns>
-        public GameClue GetClueFromImageName(string imageName)
+        public void UpdateClueFromImage(ARTrackedImage image, RuntimeClueImageState state)
+        {
+            this._runtimeClueManager?.UpdateClueFromImage(image, state);
+        }
+
+        public RuntimeClue GetRuntimeClueFromImage(string imageName)
+        {
+            return this._runtimeClueManager?.GetClueFromImage(imageName);
+        }
+
+        public GameClue GetClueFromImage(string imageName)
         {
             return this.clues.Find((GameClue clue) =>
             {
                 return clue.ReferenceImageData.ImageName == imageName;
             });
         }
-    }
-
-    [System.Serializable]
-    public class GameClueSetReference : Utils.GenericReference<GameClueSet>
-    {
-        [SerializeField]
-        private GameClueSet value;
-        private RuntimeClueManager _clueManager = null;
-
-        public override bool HasVariable 
-            => this.value != null;
-
-        protected override GameClueSet ReferenceValue 
-        { 
-            get => this.value;
-            set
-            {
-                this.value = value;
-            }
-        }
-
-        public void Init(MutableRuntimeReferenceImageLibrary imageLibrary)
-        {
-            this.Value?.AddReferenceClues(imageLibrary);
-            this._clueManager = new RuntimeClueManager(this.Value);
-        }
-
-        public void UpdateClueFromImage(ARTrackedImage image, RuntimeClueImageState state)
-        {
-            this._clueManager?.UpdateClueFromImage(image, state);
-        }
-
-        public override void Reset() { }
     }
 }

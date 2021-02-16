@@ -21,7 +21,7 @@ namespace ModifiedLocation.Scripts.Game
     public class RuntimeClue
     {
         private GameClue _gameClue;
-        private GameObject _gameObjectPrefab;
+        private ClueScannedCompnent _preScannedObject;
 
         public GameClue GameClueData
             => this._gameClue;
@@ -29,7 +29,7 @@ namespace ModifiedLocation.Scripts.Game
         public RuntimeClue(GameClue clue)
         {
             this._gameClue = clue;
-            this._gameObjectPrefab = null;
+            this._preScannedObject = null;
         }
 
         /// <summary>
@@ -39,17 +39,16 @@ namespace ModifiedLocation.Scripts.Game
         /// <param name="state">The state of the image.</param>
         public void UpdatePrefab(ARTrackedImage image, RuntimeClueImageState state)
         {
-            if(this._gameObjectPrefab == null)
+            if(this._preScannedObject == null && !this._gameClue.Found)
             {
-                GameObject prefab = this._gameClue.ReferenceImageData.Prefab;
+                GameObject prefab = this._gameClue.ReferenceImageData.Prefab.gameObject;
                 GameObject spawnedObject = GameObject.Instantiate(prefab);
-                spawnedObject.transform.position = image.transform.position;
-                spawnedObject.transform.rotation = image.transform.rotation;
-                this._gameObjectPrefab = spawnedObject;
-                return;
+                this._preScannedObject = spawnedObject.GetComponent<ClueScannedCompnent>();
+                this._preScannedObject.ParentClue = this;
             }
-            this._gameObjectPrefab.transform.position = image.transform.position;
-            this._gameObjectPrefab.transform.rotation = image.transform.rotation;
+            GameObject gameObject = this._preScannedObject.gameObject;
+            gameObject.transform.position = image.transform.position;
+            gameObject.transform.rotation = image.transform.rotation;
         }
     }
 

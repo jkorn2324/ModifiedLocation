@@ -5,9 +5,10 @@ using UnityEngine;
 namespace ModifiedLocation.Scripts.Game
 {
     /// <summary>
-    /// The clue scanner class.
+    /// Tracks the camera position, etc...
     /// </summary>
-    public class ClueScanner : MonoBehaviour
+    [RequireComponent(typeof(Camera))]
+    public class ARCameraTracker : MonoBehaviour
     {
         [SerializeField]
         private Utils.Vector3Reference cameraPosition;
@@ -16,16 +17,8 @@ namespace ModifiedLocation.Scripts.Game
 
         private void Update()
         {
-            this.transform.position = this.cameraPosition.Value;
-            this.transform.rotation = this.cameraRotation.Value;
-        }
-
-        /// <summary>
-        /// Called to try and scan for clues in the areea.
-        /// </summary>
-        public void TryScanForClues()
-        {
-
+            this.cameraPosition.Value = this.transform.position;
+            this.cameraRotation.Value = this.transform.rotation;
         }
     }
 }

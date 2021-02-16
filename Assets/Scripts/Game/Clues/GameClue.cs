@@ -15,9 +15,9 @@ namespace ModifiedLocation.Scripts.Game
         [SerializeField]
         private Texture2D textureImage;
         [SerializeField]
-        private GameObject prefab;
+        private ClueScannedCompnent prefab;
 
-        public GameObject Prefab
+        public ClueScannedCompnent Prefab
             => this.prefab;
 
         public string ImageName

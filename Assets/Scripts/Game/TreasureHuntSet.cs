@@ -9,7 +9,7 @@ namespace ModifiedLocation.Scripts.Game
     {
         
         [SerializeField]
-        private List<GameClueSet> treasureHuntClues;
+        private List<GameRiddleSet> treasureHuntClues;
     }
 }
 

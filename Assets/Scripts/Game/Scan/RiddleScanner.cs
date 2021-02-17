@@ -12,14 +12,15 @@ namespace ModifiedLocation.Scripts.Game
         /// Called when the interface is scannable by a player.
         /// </summary>
         /// <param name="scanner">The clue scanner.</param>
-        void OnScanned(ClueScanner scanner);
+        /// <param name="scanResult">The scan result.</param>
+        void OnScanned(RiddleScanner scanner, ref PlayerScanResult scanResult);
     }
 
 
     /// <summary>
     /// The clue scanner class.
     /// </summary>
-    public class ClueScanner : Utils.EventsListener
+    public class RiddleScanner : Utils.EventsListener
     {
         [SerializeField, Range(1.0f, 500.0f)]
         private float maxDistance = 5;
@@ -67,8 +68,7 @@ namespace ModifiedLocation.Scripts.Game
                 IScannable scannable = raycast.rigidbody.GetComponent<IScannable>();
                 if (scannable != null)
                 {
-                    scanResult.scanResult = PlayerScanResultType.RESULT_SUCCESS;
-                    scannable.OnScanned(this);
+                    scannable.OnScanned(this, ref scanResult);
                 }
                 this.resultScanEvent?.CallEvent(scanResult);
             }

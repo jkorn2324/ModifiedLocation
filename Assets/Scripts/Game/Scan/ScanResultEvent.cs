@@ -11,7 +11,8 @@ namespace ModifiedLocation.Scripts.Game
     {
         RESULT_SUCCESS,
         RESULT_LINE_UP,
-        RESULT_FAILED
+        RESULT_FAILED,
+        RESULT_ALREADY_FOUND
     }
 
     /// <summary>
@@ -20,6 +21,8 @@ namespace ModifiedLocation.Scripts.Game
     public struct PlayerScanResult
     {
         public PlayerScanResultType scanResult;
+        public GameRiddle riddleFound;
+        public GameRiddle nextRiddle;
     }
 
     /// <summary>

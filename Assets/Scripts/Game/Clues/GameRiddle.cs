@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 namespace ModifiedLocation.Scripts.Game
 {
     [System.Serializable]
-    public class ClueReferenceImage
+    public class RiddleReferenceImage
     {
         [SerializeField]
         private string imageName;
         [SerializeField]
         private Texture2D textureImage;
         [SerializeField]
-        private ClueScannedCompnent prefab;
+        private RiddleScannedComponent prefab;
 
-        public ClueScannedCompnent Prefab
+        public RiddleScannedComponent Prefab
             => this.prefab;
 
         public string ImageName
@@ -61,20 +61,20 @@ namespace ModifiedLocation.Scripts.Game
     }
 
     [System.Serializable]
-    public class ClueReferenceData
+    public class RiddleReferenceData
     {
         [SerializeField]
-        private string clueTitle;
+        private string riddleTitle;
         [SerializeField, TextArea(2, 30)]
-        private string clueDescription;
+        private string riddleDescription;
         [SerializeField]
         private List<string> clueHints;
 
         public string ClueTitle
-            => this.clueTitle;
+            => this.riddleTitle;
 
         public string ClueDescription
-            => this.clueDescription;
+            => this.riddleDescription;
 
         public string GetHint(int hintIndex)
         {
@@ -86,29 +86,21 @@ namespace ModifiedLocation.Scripts.Game
         }
     }
 
-    [CreateAssetMenu(fileName = "Game Clue", menuName = "Clue/Game Clue")]
-    public class GameClue : ScriptableObject
+    [CreateAssetMenu(fileName = "Game Riddle", menuName = "Clue/Game Riddle")]
+    public class GameRiddle : ScriptableObject
     {
         [SerializeField]
         private string clueLocalizedName;
         [SerializeField]
-        private ClueReferenceData clueData;
+        private RiddleReferenceData clueData;
         [SerializeField]
-        private ClueReferenceImage referenceImageData;
-        [SerializeField, HideInInspector]
-        private bool found = false;
+        private RiddleReferenceImage referenceImageData;
 
-        public ClueReferenceData ClueData
+        public RiddleReferenceData ClueData
             => this.clueData;
 
-        public ClueReferenceImage ReferenceImageData
+        public RiddleReferenceImage ReferenceImageData
             => this.referenceImageData;
-
-        public bool Found
-        {
-            get => this.found;
-            set => this.found = value;
-        }
     }
 }
 

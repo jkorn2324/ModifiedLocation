@@ -15,16 +15,24 @@ namespace ModifiedLocation.Scripts.Game
         public XRTrackedImage imageData;
     }
 
-    public class ClueManager : Utils.EventsListener
+    /// <summary>
+    /// The riddle manager.
+    /// </summary>
+    public class RiddleManager : Utils.EventsListener
     {
         [SerializeField]
-        private GameClueSet clueSet;
+        private GameRiddleSet riddleSet;
         [SerializeField]
         private Utils.ARTrackedImageEvent addedImageEvent;
         [SerializeField]
         private Utils.ARTrackedImageEvent updatedImageEvent;
         [SerializeField]
         private RuntimeReferenceImageReference imageLibrary;
+
+        protected override void OnStart()
+        {
+            this.riddleSet?.InitRiddleSet();
+        }
 
         protected override void HookEvents()
         {
@@ -46,17 +54,17 @@ namespace ModifiedLocation.Scripts.Game
             {
                 return;
             }
-            this.clueSet?.InitClueSet(imageLibrary);
+            this.riddleSet?.SetReferenceLibrary(imageLibrary);
         }
 
         private void OnImageAdded(ARTrackedImage image)
         {
-            this.clueSet?.UpdateClueFromImage(image, RuntimeClueImageState.STATE_ADDED);
+            this.riddleSet?.UpdateRiddleFromImage(image, RuntimeRiddleClueState.STATE_ADDED);
         }
 
         private void OnImageUpdated(ARTrackedImage image)
         {
-            this.clueSet?.UpdateClueFromImage(image, RuntimeClueImageState.STATE_UPDATED);
+            this.riddleSet?.UpdateRiddleFromImage(image, RuntimeRiddleClueState.STATE_UPDATED);
         }
     }
 }

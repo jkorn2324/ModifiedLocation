@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 902c09374964afb408f8febb0e922534, type: 3}
-  m_Name: DartBoardClue
+  m_Name: DartBoardRiddle
   m_EditorClassIdentifier: 
   clueLocalizedName: dart.board
   clueData:
-    clueTitle: Test Dart Board Clue
-    clueDescription: It's a big ass dart board.
+    riddleTitle: Dart Board
+    riddleDescription: Dart board riddle...
     clueHints: []
   referenceImageData:
     imageName: Dart Board
     textureImage: {fileID: 2800000, guid: dd2f904204d504e1b9d11b14320be5e3, type: 3}
-    prefab: {fileID: 2301901324170345632, guid: c7aea1ff488c4434fbefda0076654114,
+    prefab: {fileID: 6660714870921836293, guid: c7aea1ff488c4434fbefda0076654114,
       type: 3}
   found: 0

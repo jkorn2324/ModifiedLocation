@@ -14,13 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clueLocalizedName: luckyticket.clue
   clueData:
-    clueTitle: A Lucky Ticket
-    clueDescription: 'The legendary performance of a man who shocked the world with
-      a number: 81.'
+    riddleTitle: Lucky Ticket
+    riddleDescription: Lucky ticket riddle description...
     clueHints: []
   referenceImageData:
     imageName: LuckyTicket
     textureImage: {fileID: 2800000, guid: fe3304590eea4fd4bbe72f11fb01d5d0, type: 3}
-    prefab: {fileID: 2301901324170345632, guid: c7aea1ff488c4434fbefda0076654114,
+    prefab: {fileID: 6660714870921836293, guid: c7aea1ff488c4434fbefda0076654114,
       type: 3}
   found: 0

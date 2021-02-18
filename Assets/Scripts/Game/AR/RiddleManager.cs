@@ -27,11 +27,22 @@ namespace ModifiedLocation.Scripts.Game
         [SerializeField]
         private Utils.ARTrackedImageEvent updatedImageEvent;
         [SerializeField]
+        private Utils.ARTrackedImageEvent removedImageEvent;
+        [SerializeField]
         private RuntimeReferenceImageReference imageLibrary;
+
+        private static bool _initialized = false;
 
         protected override void OnStart()
         {
+            if(_initialized)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+            _initialized = true;
             this.riddleSet?.InitRiddleSet();
+            DontDestroyOnLoad(this.gameObject);
         }
 
         protected override void HookEvents()
@@ -39,6 +50,7 @@ namespace ModifiedLocation.Scripts.Game
             this.imageLibrary.ChangedValueEvent += OnRuntimeImageLibChanged;
             this.addedImageEvent?.AddListener(this.OnImageAdded);
             this.updatedImageEvent?.AddListener(this.OnImageUpdated);
+            this.removedImageEvent?.AddListener(this.OnImageRemoved);
         }
 
         protected override void UnHookEvents()
@@ -46,6 +58,7 @@ namespace ModifiedLocation.Scripts.Game
             this.imageLibrary.ChangedValueEvent -= OnRuntimeImageLibChanged;
             this.addedImageEvent?.RemoveListener(this.OnImageAdded);
             this.updatedImageEvent?.RemoveListener(this.OnImageUpdated);
+            this.removedImageEvent?.RemoveListener(this.OnImageRemoved);
         }
 
         private void OnRuntimeImageLibChanged(MutableRuntimeReferenceImageLibrary imageLibrary)
@@ -65,6 +78,11 @@ namespace ModifiedLocation.Scripts.Game
         private void OnImageUpdated(ARTrackedImage image)
         {
             this.riddleSet?.UpdateRiddleFromImage(image, RuntimeRiddleClueState.STATE_UPDATED);
+        }
+
+        private void OnImageRemoved(ARTrackedImage image)
+        {
+            this.riddleSet?.UpdateRiddleFromImage(image, RuntimeRiddleClueState.STATE_REMOVED);
         }
     }
 }

@@ -45,10 +45,29 @@ namespace ModifiedLocation.Scripts.Game
         /// <param name="state">The state of the image.</param>
         public void UpdatePrefab(ARTrackedImage image, RuntimeRiddleClueState state)
         {
+            if(state == RuntimeRiddleClueState.STATE_REMOVED)
+            {
+                if(this._preScannedObject != null)
+                {
+                    GameObject.Destroy(this._preScannedObject.gameObject);
+                    this._preScannedObject = null;
+                }
+                return;
+            }
+
             if(this.RiddleFound)
             {
-                this._preScannedObject.transform.position = image.transform.position;
-                this._preScannedObject.transform.rotation = image.transform.rotation;
+                if(this._preScannedObject == null)
+                {
+                    // tODO: Spawn a prefab for after the scan
+                    GameObject prefab = this._gameClue.ReferenceImageData.Prefab.gameObject;
+                    GameObject spawnedObject = GameObject.Instantiate(prefab);
+                    this._preScannedObject = spawnedObject.GetComponent<RiddleScannedComponent>();
+                    this._preScannedObject.ParentRiddle = this;
+                }
+                GameObject _gameObject = this._preScannedObject.gameObject;
+                _gameObject.transform.position = image.transform.position;
+                _gameObject.transform.rotation = image.transform.rotation;
                 return;
             }
 

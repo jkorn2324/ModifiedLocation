@@ -18,7 +18,7 @@ namespace ModifiedLocation.Scripts.Game
             set => this._parentRiddle = value;
         }
 
-        public void OnScanned(RiddleScanner scanner, ref PlayerScanResult scanResult)
+        public void OnScanned(RiddleScanner scanner, RaycastHit ray, ref PlayerScanResult scanResult)
         {
             if(this._parentRiddle == null)
             {

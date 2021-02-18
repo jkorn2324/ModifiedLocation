@@ -12,8 +12,29 @@ namespace ModifiedLocation.Scripts.Game
         /// Called when the interface is scannable by a player.
         /// </summary>
         /// <param name="scanner">The clue scanner.</param>
+        /// <param name="raycast">The raycast that the scanner did.</param>
         /// <param name="scanResult">The scan result.</param>
-        void OnScanned(RiddleScanner scanner, ref PlayerScanResult scanResult);
+        void OnScanned(RiddleScanner scanner, RaycastHit raycast, ref PlayerScanResult scanResult);
+    }
+
+    [System.Serializable]
+    public struct RiddleScannerReferences
+    {
+        [SerializeField]
+        public Utils.BoolReference canPlayerScan;
+        [SerializeField]
+        public Utils.Vector3Reference cameraPosition;
+        [SerializeField]
+        public Utils.QuaternionReference cameraRotation;
+    }
+
+    [System.Serializable]
+    public struct RiddleEvents
+    {
+        [SerializeField]
+        public Utils.GameEvent playerScanEvent;
+        [SerializeField]
+        public ScanResultEvent scanResultEvent;
     }
 
 
@@ -25,28 +46,29 @@ namespace ModifiedLocation.Scripts.Game
         [SerializeField, Range(1.0f, 500.0f)]
         private float maxDistance = 5;
         [SerializeField]
-        private Utils.Vector3Reference cameraPosition;
+        public RiddleScannerReferences references;
         [SerializeField]
-        private Utils.QuaternionReference cameraRotation;
-        [SerializeField]
-        private Utils.GameEvent playerScanEvent;
-        [SerializeField]
-        private ScanResultEvent resultScanEvent;
+        public RiddleEvents events;
+
+        protected override void OnStart()
+        {
+            this.references.canPlayerScan.Reset();
+        }
 
         protected override void HookEvents()
         {
-            this.playerScanEvent?.AddListener(this.TryScanForClues);
+            this.events.playerScanEvent?.AddListener(this.TryScanForClues);
         }
 
         protected override void UnHookEvents()
         {
-            this.playerScanEvent?.RemoveListener(this.TryScanForClues);
+            this.events.playerScanEvent?.RemoveListener(this.TryScanForClues);
         }
         
         private void Update()
         {
-            this.transform.position = this.cameraPosition.Value;
-            this.transform.rotation = this.cameraRotation.Value;
+            this.transform.position = this.references.cameraPosition.Value;
+            this.transform.rotation = this.references.cameraRotation.Value;
         }
 
         /// <summary>
@@ -54,24 +76,34 @@ namespace ModifiedLocation.Scripts.Game
         /// </summary>
         private void TryScanForClues()
         {
+            if(!this.references.canPlayerScan.Value)
+            {
+                return;
+            }
+
+            PlayerScanResult scanResult = new PlayerScanResult();
+            scanResult.scanResult = PlayerScanResultType.RESULT_FAILED;
+
             RaycastHit raycast;
             if (Physics.Raycast(
                 this.transform.position, this.transform.forward, out raycast))
             {
-                Debug.Log(raycast.distance);
-
-                PlayerScanResult scanResult = new PlayerScanResult();
-                scanResult.scanResult = PlayerScanResultType.RESULT_FAILED;
-
-                // TODO: Add a distance checker
-                // TODO: Add an event that triggers graphics
                 IScannable scannable = raycast.rigidbody.GetComponent<IScannable>();
                 if (scannable != null)
                 {
-                    scannable.OnScanned(this, ref scanResult);
+                    if (raycast.distance > this.maxDistance)
+                    {
+                        scanResult.scanResult = PlayerScanResultType.RESULT_LINE_UP;
+                    }
+                    else
+                    {
+                        scannable.OnScanned(this, raycast, ref scanResult);
+                    }
                 }
-                this.resultScanEvent?.CallEvent(scanResult);
             }
+
+            this.references.canPlayerScan.Value = false;
+            this.events.scanResultEvent?.CallEvent(scanResult);
         }
     }
 }

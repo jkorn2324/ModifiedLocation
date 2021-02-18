@@ -72,7 +72,13 @@ namespace ModifiedLocation.Scripts.Game
 
             foreach(ARTrackedImage updatedImage in args.updated)
             {
-                this.updatedImageEvent?.CallEvent(updatedImage);
+                if(updatedImage.trackingState == TrackingState.Tracking)
+                {
+                    this.updatedImageEvent?.CallEvent(updatedImage);
+                    continue;
+                }
+                // Tracks whether the image is removed.
+                this.removedImageEvent?.CallEvent(updatedImage);
             }
 
             foreach(ARTrackedImage removedImage in args.removed)

@@ -53,9 +53,8 @@ namespace ModifiedLocation.Scripts.Game
 
         private void UpdateNumberOfRiddles()
         {
-            Debug.Log("Update the number of riddles");
-            int numRiddles = this.references.riddleSet.GetRiddlesLeft;
-            this.uiObjects.numRiddlesText.text = numRiddles + "/" + this.references.riddleSet.GetNumberOfRiddles;
+            int numRiddles = this.references.riddleSet.TotalRiddles - this.references.riddleSet.NumRiddlesLeft;
+            this.uiObjects.numRiddlesText.text = numRiddles + "/" + this.references.riddleSet.TotalRiddles;
         }
     }
 }

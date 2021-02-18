@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4870178818558729150}
   - component: {fileID: 4870178818558729151}
   m_Layer: 0
-  m_Name: ClueScanner
+  m_Name: RiddleScanner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,13 +43,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb843094817f268488efb37ff2ac7ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPosition:
-    isConstant: 0
-    constantValue: {x: 0, y: 0, z: 0}
-    variable: {fileID: 11400000, guid: 497b27157f45863459be2ead76b916fd, type: 2}
-  cameraRotation:
-    isConstant: 0
-    constantValue: {x: 0, y: 0, z: 0, w: 0}
-    variable: {fileID: 11400000, guid: d609ccc4fd7013540bbfc69be3883576, type: 2}
-  playerScanEvent: {fileID: 11400000, guid: 2bec1a073550a7542bfb00b2ed28191f, type: 2}
-  resultScanEvent: {fileID: 11400000, guid: 7b69891fe4e20a54eac6772d227d097a, type: 2}
+  maxDistance: 40
+  references:
+    canPlayerScan:
+      isConstant: 0
+      constantValue: 0
+      variable: {fileID: 11400000, guid: 3173e4e0acf24411fb5aaa94d299828b, type: 2}
+    cameraPosition:
+      isConstant: 0
+      constantValue: {x: 0, y: 0, z: 0}
+      variable: {fileID: 11400000, guid: 497b27157f45863459be2ead76b916fd, type: 2}
+    cameraRotation:
+      isConstant: 0
+      constantValue: {x: 0, y: 0, z: 0, w: 0}
+      variable: {fileID: 11400000, guid: d609ccc4fd7013540bbfc69be3883576, type: 2}
+  events:
+    playerScanEvent: {fileID: 11400000, guid: 2bec1a073550a7542bfb00b2ed28191f, type: 2}
+    scanResultEvent: {fileID: 11400000, guid: 7b69891fe4e20a54eac6772d227d097a, type: 2}

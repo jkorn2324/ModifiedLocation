@@ -129,6 +129,20 @@ namespace ModifiedLocation.Scripts.Game
                 return clue.GameRiddleData.ReferenceImageData.ImageName == imageName;
             });
         }
+
+        public RuntimeRiddle GetRiddle(int index)
+        {
+            if(index < 0 || index >= this._riddles.Count)
+            {
+                return null;
+            }
+            return this._riddles[index];
+        }
+
+        public IEnumerator<RuntimeRiddle> GetEnumerator()
+        {
+            return this._riddles.GetEnumerator();
+        }
     }
 }
 

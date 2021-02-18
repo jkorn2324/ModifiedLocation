@@ -10,28 +10,39 @@ namespace ModifiedLocation.Scripts.Game
     [CreateAssetMenu(fileName = "Game Riddle Set", menuName = "Clue/Game Riddle Set")]
     public class GameRiddleSet : ScriptableObject
     {
+
+        #region fields
+
         [SerializeField]
         private List<GameRiddle> riddles;
 
-        private List<GameRiddle> _riddlesLeft = new List<GameRiddle>();
-        private int _currentActiveRiddleIndex = 0;
+        private List<GameRiddle> _riddlesLeft
+            = new List<GameRiddle>();
+        private RuntimeRiddleManager _runtimeRiddleManager = null;
 
-        public int GetNumberOfRiddles
+        #endregion
+
+        #region properties
+
+        public int TotalRiddles
             => this.riddles != null ? this.riddles.Count : 0;
-
-        public int GetRiddlesLeft
+        public int NumRiddlesLeft
             => this._riddlesLeft.Count;
 
-        public GameRiddle ActiveRiddle
-            => this._riddlesLeft[this._currentActiveRiddleIndex];
+        #endregion
 
-        private RuntimeRiddleManager _runtimeRiddleManager = null;
+        #region methods
 
         /// <summary>
         /// Initializes the riddle set.
         /// </summary>
         public void InitRiddleSet()
         {
+            if(this._riddlesLeft.Count > 0)
+            {
+                this._riddlesLeft.Clear();
+            }
+
             foreach(GameRiddle riddle in this.riddles)
             {
                 this._riddlesLeft.Add(riddle);
@@ -41,7 +52,6 @@ namespace ModifiedLocation.Scripts.Game
             {
                 this._runtimeRiddleManager = new RuntimeRiddleManager(this);
             }
-            this._currentActiveRiddleIndex = Random.Range(0, this._riddlesLeft.Count);
         }
 
         public void SetReferenceLibrary(MutableRuntimeReferenceImageLibrary library)
@@ -59,33 +69,40 @@ namespace ModifiedLocation.Scripts.Game
 
         public bool OnRiddleFound(GameRiddle riddle, ref PlayerScanResult scanResult)
         {
-            if(this.ActiveRiddle != riddle)
-            {
-                scanResult.scanResult = PlayerScanResultType.RESULT_FAILED;
-                return false;
-            }
-
-            scanResult.scanResult = PlayerScanResultType.RESULT_LINE_UP;
+            scanResult.scanResult = PlayerScanResultType.RESULT_SUCCESS;
             scanResult.riddleFound = riddle;
 
             if(this._riddlesLeft.Contains(riddle))
             {
-                this._riddlesLeft.RemoveAt(this._currentActiveRiddleIndex);
+                this._riddlesLeft.Remove(riddle);
             }
 
-            if(this._currentActiveRiddleIndex <= 0)
+            if(this._riddlesLeft.Count <= 0)
             {
                 // TODO: Completed treasure hunt...
                 return true;
             }
-            this._currentActiveRiddleIndex = Random.Range(0, this._riddlesLeft.Count);
-            scanResult.nextRiddle = this.ActiveRiddle;
             return true;
+        }
+
+        public List<RuntimeRiddle> GetRuntimeRiddles()
+        {
+            List<RuntimeRiddle> riddles = new List<RuntimeRiddle>();
+            foreach(RuntimeRiddle riddle in this._runtimeRiddleManager)
+            {
+                riddles.Add(riddle);
+            }
+            return riddles;
         }
 
         public RuntimeRiddle GetRuntimeRiddleFromImage(string imageName)
         {
             return this._runtimeRiddleManager?.GetRiddleFromImage(imageName);
+        }
+
+        public RuntimeRiddle GetRuntimeRiddle(int index)
+        {
+            return this._runtimeRiddleManager?.GetRiddle(index);
         }
 
         public GameRiddle GetRiddleFromImage(string imageName)
@@ -100,5 +117,7 @@ namespace ModifiedLocation.Scripts.Game
         {
             return this.riddles.GetEnumerator();
         }
+
+        #endregion
     }
 }

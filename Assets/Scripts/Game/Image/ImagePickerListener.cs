@@ -12,6 +12,10 @@ namespace ModifiedLocation.Scripts.Game
     {
         [SerializeField]
         private Utils.GameEvent playerSelectImageEvent;
+        [SerializeField]
+        private ImageLoadEvent imageLoadEvent;
+        [SerializeField]
+        private Utils.GameEvent imageCancelledEvent;
 
         protected override void HookEvents()
         {
@@ -33,17 +37,22 @@ namespace ModifiedLocation.Scripts.Game
 
         private void OnPlayerSelectImage()
         {
-            IOSPicker.BrowseImage(true);
+            IOSPicker.BrowseImage(false);
         }
 
         private void OnImageSelect(string imagePath, ImageOrientation orientation)
         {
+
             // TODO:
         }
 
         private void OnImageLoad(string imagePath, Texture2D texture2D, ImageOrientation orientation)
         {
-            // TODO: 
+            ImageLoadedData loadedData = new ImageLoadedData();
+            loadedData.imagePath = imagePath;
+            loadedData.imageTexture = texture2D;
+            loadedData.orientation = orientation;
+            this.imageLoadEvent?.CallEvent(loadedData);
         }
 
         private void OnError(string error)
@@ -53,7 +62,7 @@ namespace ModifiedLocation.Scripts.Game
 
         private void OnCancel()
         {
-            // TODO: 
+            this.imageCancelledEvent?.CallEvent();
         }
     }
 }

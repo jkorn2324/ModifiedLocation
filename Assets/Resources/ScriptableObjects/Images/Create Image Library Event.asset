@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff219d412aac704ea8ba1488a9c0639, type: 3}
   m_Name: Create Image Library Event
   m_EditorClassIdentifier: 
+  callEvent: 0

@@ -7,12 +7,14 @@ using UnityEngine.XR.ARSubsystems;
 namespace ModifiedLocation.Scripts.Game
 {
 
-    [CreateAssetMenu(fileName = "Game Riddle Set", menuName = "Clue/Game Riddle Set")]
+    [CreateAssetMenu(fileName = "Game Riddle Set", menuName = "Riddle/Game Riddle Set")]
     public class GameRiddleSet : ScriptableObject
     {
 
         #region fields
 
+        [SerializeField]
+        private string riddleSetName;
         [SerializeField]
         private List<GameRiddle> riddles;
 

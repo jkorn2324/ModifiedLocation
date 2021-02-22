@@ -64,7 +64,7 @@ namespace ModifiedLocation.Scripts.Game
         }
     }
 
-    [CreateAssetMenu(fileName = "Game Riddle", menuName = "Clue/Game Riddle")]
+    [CreateAssetMenu(fileName = "Game Riddle", menuName = "Riddle/Game Riddle")]
     public class GameRiddle : ScriptableObject
     {
         [SerializeField]

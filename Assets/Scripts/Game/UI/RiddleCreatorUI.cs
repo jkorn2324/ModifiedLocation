@@ -109,13 +109,24 @@ namespace ModifiedLocation.Scripts.Game
 
             Image activeImage = sections.ActiveSection.RiddleImage;
             RectTransform rectTransform = activeImage.rectTransform;
-            Rect rect = rectTransform.rect;
+            Rect activeRect = rectTransform.rect;
+
+            Rect outputRect;
+            this.GetScalarData(out outputRect, activeRect,
+                data.imageTexture.width, data.imageTexture.height);
+
             Sprite sprite = Sprite.Create(
-                data.imageTexture,
-                new Rect(0.0f, 0.0f, data.imageTexture.width, data.imageTexture.height),
+                data.imageTexture, outputRect,
                 Vector2.zero, 100.0f);
             activeImage.type = Image.Type.Simple;
             activeImage.sprite = sprite;
+        }
+
+        private void GetScalarData(out Rect outputRect, Rect rect, int outImageWidth, int outImageHeight)
+        {
+            float rectX = 0.0f, rectY = 0.0f;
+            float imageWidth = outImageWidth, imageHeight = outImageHeight;
+            outputRect = new Rect(rectX, rectY, imageWidth, imageHeight);
         }
 
         private void OnDescriptionUpdated(string text)

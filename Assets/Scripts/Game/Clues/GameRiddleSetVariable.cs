@@ -9,23 +9,26 @@ namespace ModifiedLocation.Scripts.Game
     public class GameRiddleSetVariable : Utils.GenericVariable<GameRiddleSet> { }
 
     [System.Serializable]
-    public class GameRiddleSetReference : Utils.GenericReference<GameRiddleSetVariable>
+    public class GameRiddleSetReference
     {
         [SerializeField]
         private GameRiddleSetVariable variable; 
 
-        public override bool HasVariable
-            => variable != null;
+        public bool HasRiddleSet
+            => this.variable != null;
 
-        protected override GameRiddleSetVariable ReferenceValue 
+        public GameRiddleSet RiddleSet
         {
-            get => this.variable;
-            set => this.variable = value;
+            get => this.variable.Value;
+            set => this.variable.Value = value;
         }
 
-        public override void Reset()
+        public void AddRiddle(GameRiddle riddle)
         {
-            this.variable?.Reset();
+            if(this.variable != null && this.variable.Value != null)
+            {
+                this.variable.Value.AddRiddle(riddle);
+            }
         }
     }
 }

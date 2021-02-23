@@ -35,6 +35,15 @@ namespace ModifiedLocation.Scripts.Game
 
         #region methods
 
+        public void AddRiddle(GameRiddle riddle)
+        {
+            if(this.riddles.Contains(riddle))
+            {
+                return;
+            }
+            this.riddles.Add(riddle);
+        }
+
         /// <summary>
         /// Initializes the riddle set.
         /// </summary>
@@ -47,7 +56,10 @@ namespace ModifiedLocation.Scripts.Game
 
             foreach(GameRiddle riddle in this.riddles)
             {
-                this._riddlesLeft.Add(riddle);
+                if(riddle != null)
+                {
+                    this._riddlesLeft.Add(riddle);
+                }
             }
 
             if(this._runtimeRiddleManager == null)
@@ -60,7 +72,10 @@ namespace ModifiedLocation.Scripts.Game
         {
             foreach (GameRiddle riddle in this.riddles)
             {
-                riddle.ReferenceImageData.AddReferenceImage(library);
+                if(riddle != null)
+                {
+                    riddle.ReferenceImageData.AddReferenceImage(library);
+                }
             }
         }
 

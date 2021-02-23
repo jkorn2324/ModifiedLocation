@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clueLocalizedName: dart.board
   clueData:
-    riddleTitle: Dart Board
-    riddleDescription: Dart board riddle...
+    riddleTitle: Modified _______
+    riddleDescription: Show me something that you modified...
     clueHints: []
   referenceImageData:
     imageName: Dart Board
     textureImage: {fileID: 2800000, guid: dd2f904204d504e1b9d11b14320be5e3, type: 3}
     prefab: {fileID: 6660714870921836293, guid: c7aea1ff488c4434fbefda0076654114,
       type: 3}
-  found: 0

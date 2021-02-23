@@ -36,6 +36,15 @@ namespace ModifiedLocation.Scripts.Game
                 Debug.Log("Number Of Reference Images: " + referenceImageLibrary.count);
             });
         }
+
+        public static RiddleReferenceImage CreateImage(string imageName, Texture2D texture, RiddleScannedComponent prefab)
+        {
+            RiddleReferenceImage referenceImage = new RiddleReferenceImage();
+            referenceImage.imageName = imageName;
+            referenceImage.textureImage = texture;
+            referenceImage.prefab = prefab;
+            return referenceImage;
+        }
     }
 
     [System.Serializable]
@@ -62,6 +71,15 @@ namespace ModifiedLocation.Scripts.Game
             }
             return this.clueHints[hintIndex];
         }
+
+
+        public static RiddleReferenceData GenerateReferenceData(string title, string desc)
+        {
+            RiddleReferenceData data = new RiddleReferenceData();
+            data.riddleTitle = title;
+            data.riddleDescription = desc;
+            return data;
+        }
     }
 
     [CreateAssetMenu(fileName = "Game Riddle", menuName = "Riddle/Game Riddle")]
@@ -79,6 +97,34 @@ namespace ModifiedLocation.Scripts.Game
 
         public RiddleReferenceImage ReferenceImageData
             => this.referenceImageData;
+        
+        /// <summary>
+        /// Creates a new game riddle based off of these parameters.
+        /// </summary>
+        /// <param name="riddleTitle">The riddle title.</param>
+        /// <param name="riddleDescription">The riddle description</param>
+        /// <param name="texture">The texture.</param>
+        /// <param name="prefab">The prefab.</param>
+        /// <returns>The game riddle output.</returns>
+        public static GameRiddle Create(string riddleTitle, string riddleDescription, Texture2D texture, RiddleScannedComponent prefab)
+        {
+            GameRiddle newRiddle = GameRiddle.CreateInstance<GameRiddle>();
+            if(newRiddle != null)
+            {
+                Debug.Log(riddleTitle);
+                string localizedName = "";
+                RiddleReferenceData referenceData = RiddleReferenceData.GenerateReferenceData(
+                    riddleTitle, riddleDescription);
+                newRiddle.clueData = referenceData;
+
+                RiddleReferenceImage imageData = RiddleReferenceImage.CreateImage(
+                    localizedName, texture, prefab);
+                newRiddle.referenceImageData = imageData;
+                newRiddle.clueLocalizedName = localizedName;
+                newRiddle.name = localizedName;
+            }
+            return newRiddle;
+        }
     }
 }
 

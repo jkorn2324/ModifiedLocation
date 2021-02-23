@@ -83,6 +83,8 @@ namespace ModifiedLocation.Scripts.Game
     public class RiddleCreatorUI : Utils.EventsListener
     {
         [SerializeField]
+        private RiddleScannedComponent prefab;
+        [SerializeField]
         private GameRiddleSetReference editedRiddleSet;
         [SerializeField]
         private Utils.GameEvent cancelEvent;
@@ -120,6 +122,8 @@ namespace ModifiedLocation.Scripts.Game
 
             RiddleDataHolder valueOfData = this._riddleDataHolder.Value;
             valueOfData.texture = data.imageTexture;
+            this._riddleDataHolder = valueOfData;
+
             Image activeImage = sections.ActiveSection.RiddleImage;
             RectTransform rectTransform = activeImage.rectTransform;
             Rect activeRect = rectTransform.rect;
@@ -137,41 +141,34 @@ namespace ModifiedLocation.Scripts.Game
 
         private void GetScalarData(out Rect outputRect, Rect rect, int outImageWidth, int outImageHeight)
         {
-            float displayRectScalar = rect.height > rect.width ? rect.height : rect.width;
-            float displayRectXScaled = rect.x / displayRectScalar;
-            float displayRectYScaled = rect.y / displayRectScalar;
-
-            float imageRectScalar = outImageHeight < outImageWidth ? outImageHeight : outImageWidth;
-            float imageRectXScaled = outImageWidth / imageRectScalar;
-            float imageRectYScaled = outImageHeight / imageRectScalar;
-
-            float extraImageWidth = imageRectXScaled - displayRectXScaled;
-            float extraImageHeight = imageRectYScaled - displayRectYScaled;
-
-            float rectX = (extraImageWidth * 0.5f) * outImageWidth, rectY = (extraImageHeight * 0.5f) * outImageHeight;
-            float imageWidth = outImageWidth * (displayRectXScaled / imageRectXScaled), imageHeight = outImageHeight *(displayRectYScaled / imageRectYScaled);
+            float rectX = 0.0f;
+            float rectY = 0.0f;
+            float imageWidth = outImageWidth;
+            float imageHeight = outImageHeight;
             outputRect = new Rect(rectX, rectY, imageWidth, imageHeight);
         }
 
-        private void OnDescriptionUpdated(string text)
+        public void OnDescriptionUpdated(Text updatedTextElement)
         {
-            if(this._riddleDataHolder.HasValue)
+            if(!this._riddleDataHolder.HasValue)
             {
                 this._riddleDataHolder = new RiddleDataHolder();
             }
 
             RiddleDataHolder dataHolderValue = this._riddleDataHolder.Value;
-            dataHolderValue.description = text;
+            dataHolderValue.description = updatedTextElement.text;
+            this._riddleDataHolder = dataHolderValue;
         }
 
-        private void OnTitleUpdated(string title)
+        public void OnTitleUpdated(Text updatedTextElement)
         {
-            if(this._riddleDataHolder.HasValue)
+            if(!this._riddleDataHolder.HasValue)
             {
                 this._riddleDataHolder = new RiddleDataHolder();
             }
             RiddleDataHolder dataHolderValue = this._riddleDataHolder.Value;
-            dataHolderValue.title = title;
+            dataHolderValue.title = updatedTextElement.text;
+            this._riddleDataHolder = dataHolderValue;
         }
 
         private void OnImageCancelled()
@@ -181,7 +178,31 @@ namespace ModifiedLocation.Scripts.Game
 
         private void OnAddRiddle()
         {
-            // TODO: Close this and add the riddle to the set
+            if(!this._riddleDataHolder.HasValue)
+            {
+                Debug.Log("Riddle holder doesnt have anyting...");
+                return;
+            }
+
+            Debug.Log("Riddle should be added...");
+            RiddleDataHolder dataHolder = this._riddleDataHolder.Value;
+            /* if(dataHolder.title.Length <= 0
+                || dataHolder.description.Length <= 0
+                || dataHolder.texture == null)
+            {
+                return;
+            }
+
+            if(!this.editedRiddleSet.HasRiddleSet)
+            {
+                return;
+            } */
+
+            GameRiddle riddle = GameRiddle.Create(
+                dataHolder.title, dataHolder.description, dataHolder.texture, prefab);
+            this.editedRiddleSet.AddRiddle(riddle);
+            this._riddleDataHolder = null;
+            // TODO: Hide creator ui
         }
     }
 }
